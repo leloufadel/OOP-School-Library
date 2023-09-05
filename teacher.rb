@@ -1,33 +1,12 @@
-# class Animal
-#     def initialize(type, number_of_legs, name = "Unknown")
-#       @id = Random.rand(1..1000)
-#       @name = name
-#       @number_of_legs = number_of_legs
-#       @type = type
-#     end
-#   end
-#   #---- Getter and setter :
-#   class Animal
-#     ...
+require './person'
 
-#     def id
-#       @id
-#     end
+class teacher < Person
+  def initialize(classroom, id, age, name = 'Unknown', parent_permission = true)
+    super(id, age, name, parent_permission)
+    @classroom = classroom
+  end
 
-#     def type
-#       @type
-#     end
-
-#     def number_of_legs
-#       @number_of_legs
-#     end
-
-#     def name
-#       @name
-#     end
-
-#     def name=(value)
-#       @name = value
-#     end
-#   end
-#   #-- attr_accessor :name
+  def can_use_services?
+    true
+  end
+end
