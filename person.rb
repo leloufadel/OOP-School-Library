@@ -1,5 +1,6 @@
 require './nameable'
 attr_accessor :name, :age
+
 attr_reader :id
 
 class Person < nameable

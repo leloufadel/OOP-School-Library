@@ -1,4 +1,4 @@
-require './basedecorator'
+require './base_decorator'
 class TrimmerDecorator < BaseDecorator
   def correct_name
     trimcorrect_name = @nameable.correct_name.slice(0, 10)
