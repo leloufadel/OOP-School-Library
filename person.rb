@@ -1,9 +1,9 @@
 require './nameable'
-attr_accessor :name, :age
 
-attr_reader :id
-
-class Person < nameable
+class Person < Nameable
+  attr_accessor :name, :age
+  attr_reader :id
+  
   def initialize(_id, age, name = 'Unknown', parent_permission = 'true')
     super()
     @id = Random.rand(1..1000)
