@@ -1,174 +1,88 @@
-require_relative 'person'
-require_relative 'classroom'
 require_relative 'book'
-require_relative 'rental'
+require_relative 'person'
 require_relative 'student'
 require_relative 'teacher'
-
+require_relative 'rental'
 class App
-  attr_reader :people, :books, :rentals
-
+  attr_accessor :all_books, :all_people, :all_rentals
   def initialize
-    @people = []
-    @books = []
-    @rentals = []
+    @all_books = []
+    @all_people = []
+    @all_rentals = []
   end
-
-  def list_books
-    puts 'Listing all books:'
-    @books.each do |book|
-      puts "Title: #{book.title}, Author: #{book.author}"
+  def books
+    @all_books.each_with_index do |book, index|
+      puts "#{index}) #{book}"
     end
   end
-
-  def list_people
-    puts 'Listing all people:'
-    @people.each do |person|
-      person_type = person.is_a?(Student) ? 'Student' : 'Teacher'
-      puts "[#{person_type}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+  def people
+    @all_people.each_with_index do |person, index|
+      puts "#{index}) #{person}"
     end
   end
-
-  def list_people_with_numbers
-    puts 'Listing all people:'
-    @people.each_with_index do |person, index|
-      person_type = person.is_a?(Student) ? 'Student' : 'Teacher'
-      puts "#{index + 1}. #{person_type}: #{person.name}"
-    end
+  def add_student
+    puts 'Age: '
+    age = gets.chomp
+    puts 'Name: '
+    name = gets.chomp
+    puts 'Has parent persmission[Y/N]: '
+    parent_perm = gets.chomp.upcase
+    persmission = (parent_perm == 'Y')
+    new_student = Student.new(age, name)
+    new_student.parent_permission = persmission
+    @all_people << new_student
+    puts 'Student Created Successfully'
   end
-
-  def create_person(type, name = nil, age = nil, parent_permission = nil)
-    case type
-    when 'student'
-      name = prompt_name(name)
-      age = prompt_age(age)
-      parent_permission = prompt_parent_permission(parent_permission)
-
-      @people << Student.new(age, name, parent_permission)
-    when 'teacher'
-      age = prompt_age(age)
-      name = prompt_name(name)
-      specialization = prompt_specialization
-
-      teacher = Teacher.new(age, specialization, name)
-      @people << teacher
-      puts 'Teacher successfully created.'
+  def add_teacher
+    puts 'Age: '
+    age = gets.chomp
+    puts 'Name: '
+    teacher_name = gets.chomp
+    puts 'Specialization: '
+    specialization = gets.chomp
+    new_teacher = Teacher.new(age, teacher_name)
+    new_teacher.specialization = specialization
+    @all_people << new_teacher
+    puts 'Teacher Created Successfully'
+  end
+  def add_person
+    puts 'Do you want to create a Student(1) or a Teacher(2)? [Input the number]: '
+    num = gets.chomp.to_i
+    case num
+    when 1
+      add_student
+    when 2
+      add_teacher
     else
-      puts 'Invalid person type.'
+      puts 'Your input is an Invalid choice'
     end
   end
-
-  def create_book
-    puts 'Creating a book:'
-    print 'Enter title: '
+  def add_book
+    puts 'Title: '
     title = gets.chomp
-    print 'Enter author: '
+    puts 'Author: '
     author = gets.chomp
-
-    book = Book.new(title, author)
-    @books << book
+    new_book = Book.new(title, author)
+    @all_books << new_book
+    puts 'Book Created Successfully'
   end
-
-  def create_rental
-    puts 'Creating a rental:'
-
-    display_books
-
-    print 'Select a book by number: '
-    book_number = gets.chomp.to_i
-
-    if valid_book_number?(book_number)
-      book = @books[book_number - 1]
-
-      display_people
-
-      print 'Select a person by number: '
-      person_number = gets.chomp.to_i
-
-      if valid_person_number?(person_number)
-        person = @people[person_number - 1]
-
-        create_rental_with_date(book, person)
-      else
-        puts 'Invalid person number.'
-      end
-    else
-      puts 'Invalid book number.'
-    end
-  end
-
-  def list_rentals_for_person(person_id)
-    person = find_person(person_id)
-
-    if person
-      puts "Listing rentals for person with ID #{person_id}:"
-      rentals = @rentals.select { |r| r.person == person }
-      rentals.each do |rental|
-        puts "Date: #{rental.date}, Book: #{rental.book.title}, Author: #{rental.book.author}"
-      end
-    else
-      puts 'Person not found.'
-    end
-  end
-
-  private
-
-  def prompt_name(name)
-    return name unless name.nil?
-
-    print 'Enter name: '
-    gets.chomp
-  end
-
-  def prompt_age(age)
-    return age unless age.nil?
-
-    print 'Enter age: '
-    gets.chomp.to_i
-  end
-
-  def prompt_parent_permission(permission)
-    return permission unless permission.nil?
-
-    print 'Has parent permission? [Y/N]: '
-    gets.chomp.upcase == 'Y'
-  end
-
-  def prompt_specialization
-    print 'Enter specialization: '
-    gets.chomp
-  end
-
-  def display_books
-    puts 'List of books:'
-    @books.each_with_index do |book, index|
-      puts "#{index + 1}. Title: #{book.title}, Author: #{book.author}"
-    end
-  end
-
-  def valid_book_number?(number)
-    number.between?(1, @books.length)
-  end
-
-  def display_people
-    puts 'List of people:'
-    list_people_with_numbers
-  end
-
-  def valid_person_number?(number)
-    number.between?(1, @people.length)
-  end
-
-  def find_person(person_id)
-    @people.find { |p| p.id == person_id }
-  end
-
-  def create_rental_with_date(book, person)
-    print 'Enter date: '
+  def add_rental
+    puts 'Select a book  from the following list by number'
+    books
+    book_num = gets.chomp.to_i
+    puts 'Select a person from the list by number (not ID)'
+    people
+    person_num = gets.chomp.to_i
+    puts 'Date: '
     date = gets.chomp
-
-    rental = Rental.new(date, book, person)
-    @rentals << rental
-    puts 'Rental created successfully.'
+    new_rental = Rental.new(date, @all_books[book_num], @all_people[person_num])
+    @all_rentals << new_rental
+    puts 'Rental Added Successfully'
+  end
+  def all_personal_rentals(id)
+    person_rental = @all_rentals.select do |rental|
+      rental.person.id == id
+    end
+    puts person_rental
   end
 end
