@@ -5,21 +5,25 @@ require_relative 'teacher'
 require_relative 'rental'
 class App
   attr_accessor :all_books, :all_people, :all_rentals
+
   def initialize
     @all_books = []
     @all_people = []
     @all_rentals = []
   end
+
   def books
     @all_books.each_with_index do |book, index|
       puts "#{index}) #{book}"
     end
   end
+
   def people
     @all_people.each_with_index do |person, index|
       puts "#{index}) #{person}"
     end
   end
+
   def add_student
     puts 'Age: '
     age = gets.chomp
@@ -33,6 +37,7 @@ class App
     @all_people << new_student
     puts 'Student Created Successfully'
   end
+
   def add_teacher
     puts 'Age: '
     age = gets.chomp
@@ -45,6 +50,7 @@ class App
     @all_people << new_teacher
     puts 'Teacher Created Successfully'
   end
+
   def add_person
     puts 'Do you want to create a Student(1) or a Teacher(2)? [Input the number]: '
     num = gets.chomp.to_i
@@ -57,6 +63,7 @@ class App
       puts 'Your input is an Invalid choice'
     end
   end
+
   def add_book
     puts 'Title: '
     title = gets.chomp
@@ -66,6 +73,7 @@ class App
     @all_books << new_book
     puts 'Book Created Successfully'
   end
+
   def add_rental
     puts 'Select a book  from the following list by number'
     books
@@ -79,6 +87,7 @@ class App
     @all_rentals << new_rental
     puts 'Rental Added Successfully'
   end
+
   def all_personal_rentals(id)
     person_rental = @all_rentals.select do |rental|
       rental.person.id == id

@@ -1,79 +1,48 @@
 require_relative 'app'
+def menu_list
+  puts ''
+  puts 'Welcome to School Library App!'
+  puts ''
+  puts 'Please choose an option by entering a number: '
+  puts '1 - List all books'
+  puts '2 - List all people'
+  puts '3 - Create a person'
+  puts '4 - Create a book'
+  puts '5 - Create a renal'
+  puts '6 - List all rentals for a given person id'
+  puts '7 - Exit'
+end
 
-MENU_OPTIONS = {
-  1 => { label: 'List all books', method: :handle_list_books },
-  2 => { label: 'List all people', method: :handle_list_people },
-  3 => { label: 'Create a person', method: :handle_create_person },
-  4 => { label: 'Create a book', method: :handle_create_book },
-  5 => { label: 'Create a rental', method: :handle_create_rental },
-  6 => { label: 'List rentals for a person', method: :handle_list_rentals },
-  0 => { label: 'Quit', method: nil }
-}.freeze
-
-# Represents main entry
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/MethodLength
 def main
-  app = App.new
-
+  my_app = App.new
   loop do
-    display_menu
-
+    menu_list
     choice = gets.chomp.to_i
-
-    break if choice.zero?
-
-    handle_choice(app, choice)
-    puts "\n"
+    case choice
+    when 1
+      my_app.books
+    when 2
+      my_app.people
+    when 3
+      my_app.add_person
+    when 4
+      my_app.add_book
+    when 5
+      my_app.add_rental
+    when 6
+      puts 'Enter person ID'
+      id = gets.chomp.to_i
+      my_app.all_personal_rentals(id)
+    when 7
+      puts 'Thank you for using this app!'
+      break
+    else
+      puts 'Your input is Invalid'
+    end
   end
 end
-
-def display_menu
-  puts 'What would you like to do?'
-  MENU_OPTIONS.each { |key, option| puts "#{key}. #{option[:label]}" }
-end
-
-def handle_choice(app, choice)
-  if MENU_OPTIONS.key?(choice)
-    method_name = MENU_OPTIONS[choice][:method]
-    send(method_name, app) if method_name
-  else
-    puts 'Invalid choice.'
-  end
-end
-
-def handle_list_books(app)
-  app.list_books
-end
-
-def handle_list_people(app)
-  app.list_people
-end
-
-def handle_create_person(app)
-  puts 'Do you want to create a student(1) or a teacher(2)? [Input the number]:'
-  person_type = gets.chomp.to_i
-
-  case person_type
-  when 1
-    app.create_person('student')
-  when 2
-    app.create_person('teacher')
-  else
-    puts 'Invalid person type.'
-  end
-end
-
-def handle_create_book(app)
-  app.create_book
-end
-
-def handle_create_rental(app)
-  app.create_rental
-end
-
-def handle_list_rentals(app)
-  print 'Enter person ID: '
-  person_id = gets.chomp.to_i
-  app.list_rentals_for_person(person_id)
-end
-
-main
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/MethodLength
+main if __FILE__ == $PROGRAM_NAME
