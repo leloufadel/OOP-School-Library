@@ -44,7 +44,7 @@ class App
       age = prompt_age(age)
       parent_permission = prompt_parent_permission(parent_permission)
 
-      @people << Student.new(age, name, parent_permission)
+    #   @people << Student.new(age, name, parent_permission)
     when 'teacher'
       age = prompt_age(age)
       name = prompt_name(name)
