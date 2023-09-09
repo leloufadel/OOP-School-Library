@@ -1,12 +1,15 @@
-require './person'
-
 class Teacher < Person
-  def initialize(specialization, id, age, name: 'Unknown', parent_permission: true)
-    super(id, age, name, parent_permission)
-    @specialization = specialization
+  attr_accessor :specialization
+
+  def initialize(age, name = 'Unknown')
+    super(age, name)
   end
 
-  def can_use_services?
+  def can_use_services
     true
+  end
+
+  def to_s
+    "Teacher:#{@name}, Age: #{@age}, Specialization: #{@specialization}, ID: #{@id}"
   end
 end
