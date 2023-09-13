@@ -1,16 +1,13 @@
 require_relative '../person'
 require_relative '../student'
 
-
 RSpec.describe Student do
   let(:student) { Student.new(16, 'Alice') }
-
   describe '#initialize' do
     it 'creates a Student object with the given age and name' do
       expect(student.age).to eq(16)
       expect(student.name).to eq('Alice')
     end
-
     it 'sets the name to "Unknown" if no name is provided' do
       student_without_name = Student.new(18)
       expect(student_without_name.name).to eq('Unknown')
