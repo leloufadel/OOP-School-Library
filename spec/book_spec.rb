@@ -4,18 +4,15 @@ require_relative '../person'
 
 RSpec.describe Book do
   let(:book) { Book.new('Book Title', 'Author Name') }
-
   describe '#initialize' do
     it 'creates a Book object with the provided title and author' do
       expect(book.title).to eq('Book Title')
       expect(book.author).to eq('Author Name')
     end
-
     it 'initializes rentals as an empty array' do
       expect(book.rentals).to be_empty
     end
   end
-
   describe '#add_rental' do
     it 'creates a new rental associated with the book and person' do
       person = Person.new(18, 'John Doe')
