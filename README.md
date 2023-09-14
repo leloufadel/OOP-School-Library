@@ -34,7 +34,8 @@
 - **List all persons**
 -**Implement encapsulation and inheritance with Ruby**
 - **Basic command prompt user interface**
-- **Seperate classes & inheritance**
+- **Seperate classes & inheritance** 
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -107,7 +108,19 @@ Deployment is not available yet.
 - LinkedIn: [Lala Aicha ](https://www.linkedin.com/in/lalaaicha-elvadel/)
 - Twitter: [@twitterhandle](https://twitter.com/leloufadel)
 
+## 👥 Authors <a name="authors"></a>
 
+👤 **Rodrigo Penayo**
+
+- GitHub: [@rodrigopenayo98](https://github.com/rodrigopenayo98)
+- Twitter: [@rodrigopenayo98](https://twitter.com/rodrigopenayo98)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/rodrigo-penayo-391226158/)
+
+
+👤 **kirti Arora**
+
+- GitHub: [@kit0-0](https://github.com/kit0-0?tab=repositories)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/kirtiar/)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
